@@ -11,15 +11,11 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class CafeFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_cafe, container, false)
     }
 
@@ -29,7 +25,8 @@ class CafeFragment : Fragment() {
         val viewPager = view.findViewById<ViewPager2>(R.id.view_pager)
         val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout)
 
-        val adapter = CafeAdapter(childFragmentManager, lifecycle)
+        // langsung pakai adapter tanpa anonymous class
+        val adapter = CafeAdapter(this)
         viewPager.adapter = adapter
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->

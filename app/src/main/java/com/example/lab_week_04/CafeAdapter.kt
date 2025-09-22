@@ -1,8 +1,6 @@
 package com.example.lab_week_04
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
 val TABS_FIXED = listOf(
@@ -11,16 +9,18 @@ val TABS_FIXED = listOf(
     R.string.kopikenangan_title,
 )
 
-class CafeAdapter(
-    fragmentManager: FragmentManager,
-    lifecycle: Lifecycle
-) : FragmentStateAdapter(fragmentManager, lifecycle) {
+class CafeAdapter(private val parentFragment: Fragment) : FragmentStateAdapter(parentFragment) {
 
-    override fun getItemCount(): Int {
-        return TABS_FIXED.size
-    }
+    override fun getItemCount(): Int = TABS_FIXED.size
 
     override fun createFragment(position: Int): Fragment {
-        return CafeDetailFragment()
+        // Ambil string description sesuai tab
+        val content = when (position) {
+            0 -> parentFragment.resources.getString(R.string.starbucks_desc)
+            1 -> parentFragment.resources.getString(R.string.janjijiwa_desc)
+            2 -> parentFragment.resources.getString(R.string.kopikenangan_desc)
+            else -> ""
+        }
+        return CafeDetailFragment.newInstance(content)
     }
 }
